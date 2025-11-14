@@ -15,11 +15,18 @@ export const Timeline: React.FC = () => {
 
   // 计算时间统计 - 基于当前页面日期，从第1天开始计算
   const calculateDaysFromDate = (startDate: string, endDate: string): number => {
-    const start = new Date(startDate)
-    const end = new Date(endDate)
+    // 解析日期字符串，确保正确处理YYYY-MM-DD格式
+    const startParts = startDate.split('-').map(Number)
+    const endParts = endDate.split('-').map(Number)
+    
+    // 创建日期对象，月份需要减1（JavaScript中月份从0开始）
+    const start = new Date(startParts[0], startParts[1] - 1, startParts[2])
+    const end = new Date(endParts[0], endParts[1] - 1, endParts[2])
+    
     // 设置时间为午夜以避免时区问题
     start.setHours(0, 0, 0, 0)
     end.setHours(0, 0, 0, 0)
+    
     const diffTime = end.getTime() - start.getTime()
     // 加1天，让起始日算为第1天而不是第0天
     return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1
@@ -39,9 +46,9 @@ export const Timeline: React.FC = () => {
   const getDynamicStats = () => {
     const currentDate = getCurrentPageDate()
     
-    // 重要日期 - 使用与时间线数据一致的格式 (YYYY-M-D)
-    const firstMeetingDate = '2022-4-24' // 相知开始
-    const reunionDate = '2023-2-4' // 再相遇开始  
+    // 重要日期 - 使用与时间线数据一致的格式 (YYYY-MM-DD)
+    const firstMeetingDate = '2022-04-24' // 相知开始
+    const reunionDate = '2023-02-04' // 再相遇开始  
     const marriageDate = '2024-11-23' // 结婚开始
     
     const stats = []
