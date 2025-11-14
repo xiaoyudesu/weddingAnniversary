@@ -1,0 +1,58 @@
+/* 移动端优化样式 */
+@media (max-width: 640px) {
+  /* 时间轴卡片优化 */
+  .timeline-card {
+    @apply mx-4;
+  }
+  
+  /* 导航按钮优化 */
+  .nav-button {
+    @apply w-10 h-10;
+  }
+  
+  /* 字体大小调整 */
+  .mobile-text {
+    @apply text-sm;
+  }
+  
+  /* 触摸区域优化 */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 触摸滑动优化 */
+.touch-pan-y {
+  touch-action: pan-y;
+}
+
+/* 防止文本选择干扰滑动 */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
