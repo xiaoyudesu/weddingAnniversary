@@ -158,7 +158,7 @@ export const Timeline: React.FC = () => {
     const playAudio = async () => {
       try {
         await audioRef.current?.play()
-      } catch (error) {
+      } catch {
         console.log('自动播放被阻止，等待用户交互')
         setIsPlaying(false)
       }
@@ -201,7 +201,6 @@ export const Timeline: React.FC = () => {
     }
 
     const handleSwipe = () => {
-      const diff = touchEndX - touchStartX
       if (touchEndX < touchStartX - 50) {
         nextNode() // 向左滑动
       }
@@ -224,13 +223,20 @@ export const Timeline: React.FC = () => {
       {/* 音乐控制按钮 */}
       <button
         onClick={toggleMusic}
-        className="fixed top-6 right-6 z-50 bg-white/90 backdrop-blur-md rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
+        className="fixed top-6 right-6 z-50 bg-white/90 backdrop-blur-md rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 group absolute overflow-hidden flex items-center justify-center w-12 h-12"
         title={isPlaying ? '暂停音乐' : '播放音乐'}
       >
         {isPlaying ? (
-          <Pause className="w-6 h-6 text-pink-600 group-hover:text-pink-700" />
+          <Pause className="w-5 h-5 sm:w-6 sm:h-6 text-pink-600 group-hover:text-pink-700 leading-none" />
         ) : (
-          <Play className="w-6 h-6 text-gray-600 group-hover:text-pink-600" />
+          <Play className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 group-hover:text-pink-600 leading-none" />
+        )}
+        {isPlaying && (
+          <div className="eq-wrap">
+            <span className="eq-bar" />
+            <span className="eq-bar" />
+            <span className="eq-bar" />
+          </div>
         )}
       </button>
       {/* 背景图片模糊效果 */}
@@ -273,22 +279,7 @@ export const Timeline: React.FC = () => {
         </div>
       </div>
 
-      {/* 导航按钮 - 翻页效果 */}
-      {/* <button
-        onClick={prevNode}
-        className="fixed left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={currentIndex === 0}
-      >
-        <ChevronLeft className="w-8 h-8 text-gray-600 group-hover:text-pink-600 transition-colors duration-300" />
-      </button>
-
-      <button
-        onClick={nextNode}
-        className="fixed right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 hover:shadow-2xl group disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={currentIndex === timelineData2.length - 1}
-      >
-        <ChevronRight className="w-8 h-8 text-gray-600 group-hover:text-pink-600 transition-colors duration-300" />
-      </button> */}
+      
 
       {/* 时间轴内容 - 添加过渡效果 */}
       <div className={`flex items-center justify-center min-h-screen relative z-10 transition-all duration-300 ${
@@ -314,10 +305,24 @@ export const Timeline: React.FC = () => {
       )}
 
       {/* 底部提示 */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-center z-20">
-        <p className="text-gray-600 text-sm bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg animate-pulse">
-         {currentIndex + 1} / {timelineData2.length}
+      <div className="fixed left-0 right-0 bottom-4 z-20 flex items-center justify-center gap-4 px-4 pb-[env(safe-area-inset-bottom)]">
+        <button
+          onClick={prevNode}
+          className="bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group nav-button flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12"
+          title="上一页"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 group-hover:text-pink-600 leading-none" />
+        </button>
+        <p className="text-gray-700 text-sm bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+          {currentIndex + 1} / {timelineData2.length}
         </p>
+        <button
+          onClick={nextNode}
+          className="bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group nav-button flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12"
+          title="下一页"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 group-hover:text-pink-600 leading-none" />
+        </button>
       </div>
     </div>
   )

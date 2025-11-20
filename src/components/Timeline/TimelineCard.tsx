@@ -25,21 +25,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({
     setIsImageModalOpen(false)
   }
 
-  // 获取背景样式
-  const getBackgroundStyle = () => {
-    if (node.image) {
-      return {
-        backgroundImage: `url(${node.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }
-    } else if (node.themeColor) {
-      return {}
-    } else {
-      return {}
-    }
-  }
+  
 
   return (
     <div style={{width:'100%'}} className={`min-h-screen flex flex-col items-center justify-center p-4 transition-all duration-700 transform ${
