@@ -6,35 +6,41 @@ interface TimelineCardProps {
   node: TimelineNode
   onDiaryClick: () => void
   isActive: boolean
+  onImageOpen: () => void
+  onImageClose: () => void
 }
 
 export const TimelineCard: React.FC<TimelineCardProps> = ({ 
   node, 
   onDiaryClick, 
-  isActive 
+  isActive,
+  onImageOpen,
+  onImageClose,
 }) => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
 
   const openImageModal = () => {
     if (node.image) {
       setIsImageModalOpen(true)
+      onImageOpen()
     }
   }
 
   const closeImageModal = () => {
     setIsImageModalOpen(false)
+    onImageClose()
   }
 
   
 
   return (
-    <div style={{width:'100%'}} className={`min-h-screen flex flex-col items-center justify-center p-4 transition-all duration-700 transform ${
+    <div style={{width:'100%'}} className={`h-full flex flex-col items-center justify-center p-4 transition-all duration-700 transform ${
       isActive ? 'opacity-100 scale-100' : 'opacity-50 scale-90'
     }`}>
       <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden max-w-lg w-full border border-white/20">
         {/* 图片区域 - 无图片时显示更优雅的渐变和装饰 */}
         <div 
-          className={`relative h-72 cursor-pointer group ${
+          className={`relative h-[38vh] sm:h-72 cursor-pointer group ${
             node.image 
               ? '' 
               : node.themeColor 
@@ -105,7 +111,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({
           
       {/* 图片放大模态框 */}
       {isImageModalOpen && node.image && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="relative max-w-4xl max-h-full">
             <img
               src={node.image}

@@ -12,6 +12,7 @@ export const Timeline: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(true)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [isImagePreviewOpen, setIsImagePreviewOpen] = useState(false)
 
   // 计算时间统计 - 基于当前页面日期，从第1天开始计算
   const calculateDaysFromDate = (startDate: string, endDate: string): number => {
@@ -219,8 +220,9 @@ export const Timeline: React.FC = () => {
   }, [isTransitioning])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden">
+    <div className="h-[100dvh] bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 relative overflow-hidden content-container flex flex-col">
       {/* 音乐控制按钮 */}
+      {!isImagePreviewOpen && (
       <button
         onClick={toggleMusic}
         className="fixed top-6 right-6 z-50 bg-white/90 backdrop-blur-md rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 group absolute overflow-hidden flex items-center justify-center w-12 h-12"
@@ -239,6 +241,7 @@ export const Timeline: React.FC = () => {
           </div>
         )}
       </button>
+      )}
       {/* 背景图片模糊效果 */}
       {timelineData2[currentIndex].image && (
         <div className="fixed inset-0 z-0">
@@ -252,7 +255,8 @@ export const Timeline: React.FC = () => {
       )}
 
       {/* 时间统计 - 基于当前页面日期的动态统计 */}
-      <div className="fixed top-4 left-4 right-4 z-20">
+      {!isImagePreviewOpen && (
+      <div className="px-4 pt-4 stats-panel">
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
           <div className="text-center mb-2">
             <span className="text-sm font-medium text-gray-600">截至 {getCurrentPageDate()}</span>
@@ -278,17 +282,20 @@ export const Timeline: React.FC = () => {
           </div>
         </div>
       </div>
+      )}
 
       
 
       {/* 时间轴内容 - 添加过渡效果 */}
-      <div className={`flex items-center justify-center min-h-screen relative z-10 transition-all duration-300 ${
+      <div className={`flex-1 flex items-center justify-center relative z-10 transition-all duration-300 ${
         isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
       }`}>
         <TimelineCard
           node={timelineData2[currentIndex]}
           onDiaryClick={() => openDiary(timelineData2[currentIndex])}
           isActive={true}
+          onImageOpen={() => setIsImagePreviewOpen(true)}
+          onImageClose={() => setIsImagePreviewOpen(false)}
         />
       </div>
 
@@ -305,7 +312,8 @@ export const Timeline: React.FC = () => {
       )}
 
       {/* 底部提示 */}
-      <div className="fixed left-0 right-0 bottom-4 z-20 flex items-center justify-center gap-4 px-4 pb-[env(safe-area-inset-bottom)]">
+      {!isImagePreviewOpen && (
+      <div className="mt-auto z-20 flex items-center justify-center gap-4 px-4 pb-[env(safe-area-inset-bottom)] mb-3">
         <button
           onClick={prevNode}
           className="bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group nav-button flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12"
@@ -324,6 +332,7 @@ export const Timeline: React.FC = () => {
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 group-hover:text-pink-600 leading-none" />
         </button>
       </div>
+      )}
     </div>
   )
 }

@@ -22,7 +22,7 @@ export const DiaryModal: React.FC<DiaryModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-pink-900/80 via-purple-900/80 to-indigo-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white/95 backdrop-blur-md rounded-3xl max-w-lg w-full max-h-[80vh] shadow-2xl border border-white/20 overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl max-w-lg w-full max-h-[92vh] shadow-2xl border border-white/20 overflow-hidden">
         <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-pink-100 p-6 flex justify-between items-center rounded-t-3xl">
           <div>
             <h2 className="text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
@@ -37,7 +37,7 @@ export const DiaryModal: React.FC<DiaryModalProps> = ({
             <X className="w-6 h-6 text-gray-600 group-hover:text-pink-600 transition-colors" />
           </button>
         </div>
-        <div className="overflow-y-auto max-h-[calc(80vh-120px)]">
+        <div className="overflow-y-auto max-h-[calc(92vh-120px)] pb-[env(safe-area-inset-bottom)]">
           <div className="p-8">
             {/* 副标题 - 如果有的话 */}
             {subtext && (

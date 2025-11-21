@@ -89,3 +89,15 @@ html {
   75% { transform: scaleY(0.8); }
   100% { transform: scaleY(0.4); }
 }
+/* 小高度视窗适配，避免顶部统计遮挡 */
+/* @media (max-height: 700px) {
+  .stats-panel {
+    position: static !important;
+    z-index: auto !important;
+    margin: 8px 16px 0 16px;
+  }
+
+  .content-container {
+    padding-top: 6px;
+  }
+} */
